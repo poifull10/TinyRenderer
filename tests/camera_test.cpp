@@ -3,9 +3,9 @@
 
 TEST(Camera, construct) {
   render::Camera camera(11, 13);
-  ASSERT_EQ(camera.image().width(), 11);
-  ASSERT_EQ(camera.image().height(), 13);
-}  // namespace render
+  ASSERT_EQ(camera.width(), 11);
+  ASSERT_EQ(camera.height(), 13);
+}
 
 TEST(Camera, ray) {
   render::Camera camera(11, 11);
@@ -17,4 +17,10 @@ TEST(Camera, ray) {
   ASSERT_FLOAT_EQ(ray.direction().x(), 0.F);
   ASSERT_FLOAT_EQ(ray.direction().y(), 0.F);
   ASSERT_FLOAT_EQ(ray.direction().z(), 1.F);
+}
+
+TEST(Camera, image) {
+  render::Camera camera(11, 13);
+  ASSERT_EQ(camera.width(), 11);
+  ASSERT_EQ(camera.height(), 13);
 }

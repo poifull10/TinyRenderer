@@ -2,7 +2,6 @@
 #include <image.h>
 
 TEST(Image, construct) {
-  ASSERT_THROW(render::Image(10, 11), std::invalid_argument);
   render::Image image2(11, 13);
   ASSERT_EQ(image2.width(), 11);
   ASSERT_EQ(image2.height(), 13);
