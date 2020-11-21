@@ -1,6 +1,7 @@
 add_executable(
   TRendererTest
   main.cpp
+  image_test.cpp
 )
 
 target_include_directories(TRendererTest
