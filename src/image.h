@@ -1,5 +1,6 @@
 #pragma once
 #include <cctype>
+#include <string>
 #include <vector>
 
 namespace render {
@@ -25,6 +26,10 @@ class Image {
 
   RGB& operator()(std::size_t w, std::size_t h);
   RGB operator()(std::size_t w, std::size_t h) const;
+
+  void save(const std::string& path) const;
+  static Image load(const std::string& path);
+  const RGB* data() { return data_.data(); }
 
  private:
   std::size_t width_;

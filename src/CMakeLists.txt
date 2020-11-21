@@ -14,6 +14,7 @@ target_compile_options(
 )
 
 find_package(Boost REQUIRED filesystem)
+find_package(PNG REQUIRED)
 
 target_include_directories(${PROJECT_NAME}
   PUBLIC
@@ -23,7 +24,7 @@ target_include_directories(${PROJECT_NAME}
   ${Boost_INCLUDE_DIRS}
 )
 
-target_link_libraries(${PROJECT_NAME} PUBLIC Boost::boost)
+target_link_libraries(${PROJECT_NAME} PUBLIC Boost::boost PNG::PNG)
 
 include(GNUInstallDirs)
 install(TARGETS ${PROJECT_NAME}
