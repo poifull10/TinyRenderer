@@ -2,13 +2,14 @@
 #include <image.h>
 
 TEST(Image, construct) {
-  render::Image image(10, 11);
-  ASSERT_EQ(image.width(), 10);
-  ASSERT_EQ(image.height(), 11);
+  ASSERT_THROW(render::Image(10, 11), std::invalid_argument);
+  render::Image image2(11, 13);
+  ASSERT_EQ(image2.width(), 11);
+  ASSERT_EQ(image2.height(), 13);
 }
 
 TEST(Image, get_set) {
-  render::Image image(10, 10);
+  render::Image image(11, 11);
   ASSERT_EQ(image(0, 0), render::RGB(0, 0, 0));
   ASSERT_EQ(image(1, 1), render::RGB(0, 0, 0));
   image(0, 0) = render::RGB(2, 3, 4);
@@ -19,7 +20,7 @@ TEST(Image, get_set) {
 
 TEST(Image, load_save) {
   using RGB = render::RGB;
-  render::Image image(2, 2);
+  render::Image image(3, 3);
   image(0, 0) = RGB(0, 0, 0);
   image(1, 0) = RGB(255, 255, 255);
   image(0, 1) = RGB(255, 0, 0);
