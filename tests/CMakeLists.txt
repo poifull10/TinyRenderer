@@ -3,6 +3,7 @@ add_executable(
   main.cpp
   image_test.cpp
   vec_test.cpp
+  ray_test.cpp
 )
 
 target_include_directories(TRendererTest
