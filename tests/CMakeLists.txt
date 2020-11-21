@@ -2,6 +2,7 @@ add_executable(
   TRendererTest
   main.cpp
   image_test.cpp
+  camera_test.cpp
   vec_test.cpp
   ray_test.cpp
 )
