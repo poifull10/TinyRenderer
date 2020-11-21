@@ -9,7 +9,13 @@ class Camera {
  public:
   Camera(std::size_t width, std::size_t height) : image_(width, height) {}
 
-  Image& image() { return image_; }
+  std::size_t width() const { return image_.width(); }
+  std::size_t height() const { return image_.height(); }
+
+  void save(const std::string& path) const { image_.save(path); }
+  void load(const std::string& path) { image_ = Image::load(path); }
+
+  RGB& image(std::size_t w, std::size_t h) { return image_(w, h); }
 
   Ray ray(std::size_t w, std::size_t h) const {
     constexpr auto pixelSize = 1e-3F;

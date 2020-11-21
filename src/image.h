@@ -20,12 +20,6 @@ inline bool operator==(const RGB& rgb1, const RGB& rgb2) {
 class Image {
  public:
   Image(std::size_t width, std::size_t height) : width_(width), height_(height), data_(width * height) {
-    if (width_ % 2 == 0) {
-      throw std::invalid_argument("width must be odd.");
-    }
-    if (height_ % 2 == 0) {
-      throw std::invalid_argument("height must be odd.");
-    }
   }
 
   std::size_t width() const { return width_; }
