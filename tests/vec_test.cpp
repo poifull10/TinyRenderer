@@ -24,3 +24,13 @@ TEST(Vec, operator) {
   ASSERT_FLOAT_EQ(vec2.z(), 0.F);
   ASSERT_FLOAT_EQ(vec2.norm(), 0.F);
 }
+
+TEST(Vec, minus) {
+  render::Vec vec1(3, 1, 4);
+  render::Vec vec2(1, 5, 4);
+  const auto vec = vec1 - vec2;
+
+  ASSERT_FLOAT_EQ(vec.x(), 2.F);
+  ASSERT_FLOAT_EQ(vec.y(), -4.F);
+  ASSERT_FLOAT_EQ(vec.z(), 0.F);
+}

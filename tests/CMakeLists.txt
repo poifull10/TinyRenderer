@@ -5,6 +5,7 @@ add_executable(
   camera_test.cpp
   vec_test.cpp
   ray_test.cpp
+  sphere_test.cpp
 )
 
 target_include_directories(TRendererTest

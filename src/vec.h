@@ -28,6 +28,10 @@ class Vec {
                z() / norm());
   }
 
+  Vec operator-(const Vec& vec) const {
+    return Vec(x() - vec.x(), y() - vec.y(), z() - vec.z());
+  }
+
  private:
   std::array<float, 3> data_;
 };
