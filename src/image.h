@@ -17,6 +17,10 @@ inline bool operator==(const RGB& rgb1, const RGB& rgb2) {
   return rgb1.r == rgb2.r && rgb1.g == rgb2.g && rgb1.b == rgb2.b;
 }
 
+inline bool operator!=(const RGB& rgb1, const RGB& rgb2) {
+  return rgb1.r != rgb2.r || rgb1.g != rgb2.g || rgb1.b != rgb2.b;
+}
+
 class Image {
  public:
   Image(std::size_t width, std::size_t height) : width_(width), height_(height), data_(width * height) {
