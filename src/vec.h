@@ -28,8 +28,24 @@ class Vec {
                z() / norm());
   }
 
+  Vec operator+(const Vec& vec) const {
+    return Vec(x() + vec.x(), y() + vec.y(), z() + vec.z());
+  }
+
   Vec operator-(const Vec& vec) const {
     return Vec(x() - vec.x(), y() - vec.y(), z() - vec.z());
+  }
+
+  Vec operator*(float k) const {
+    return Vec(x() * k, y() * k, z() * k);
+  }
+
+  Vec operator/(float k) const {
+    return Vec(x() / k, y() / k, z() / k);
+  }
+
+  float dot(const Vec& vec) const {
+    return x() * vec.x() + y() * vec.y() + z() * vec.z();
   }
 
  private:

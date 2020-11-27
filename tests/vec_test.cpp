@@ -34,3 +34,10 @@ TEST(Vec, minus) {
   ASSERT_FLOAT_EQ(vec.y(), -4.F);
   ASSERT_FLOAT_EQ(vec.z(), 0.F);
 }
+
+TEST(Vec, dot) {
+  render::Vec vec1(3, 1, 4);
+  render::Vec vec2(1, 5, 4);
+  ASSERT_FLOAT_EQ(vec1.dot(vec2), 24.F);
+  ASSERT_FLOAT_EQ(vec2.dot(vec1), 24.F);
+}

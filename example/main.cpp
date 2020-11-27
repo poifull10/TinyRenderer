@@ -11,8 +11,9 @@ int main(int argc, char** argv) {
   for (auto h = 0; h < camera.height(); h++) {
     for (auto w = 0; w < camera.width(); w++) {
       const auto ray = camera.ray(w, h);
-      if (sphere.hit(ray)) {
-        camera.image(w, h) = render::RGB(255, 0, 255);
+      const auto reflection = sphere.interact(ray);
+      if (reflection.has_value()) {
+        camera.image(w, h) = reflection.value().color;
       }
     }
   }

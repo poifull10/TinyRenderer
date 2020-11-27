@@ -11,6 +11,12 @@ struct RGB {
   std::uint8_t b;
   RGB() : r(), g(), b() {}
   RGB(std::uint8_t r, std::uint8_t g, std::uint8_t b) : r(r), g(g), b(b) {}
+  RGB& operator+=(const RGB& rgb) {
+    r += rgb.r;
+    g += rgb.g;
+    b += rgb.b;
+    return *this;
+  }
 };
 
 inline bool operator==(const RGB& rgb1, const RGB& rgb2) {
@@ -19,6 +25,10 @@ inline bool operator==(const RGB& rgb1, const RGB& rgb2) {
 
 inline bool operator!=(const RGB& rgb1, const RGB& rgb2) {
   return rgb1.r != rgb2.r || rgb1.g != rgb2.g || rgb1.b != rgb2.b;
+}
+
+inline RGB operator*(float decay, const RGB& rgb) {
+  return RGB(rgb.r * decay, rgb.g * decay, rgb.b * decay);
 }
 
 class Image {
