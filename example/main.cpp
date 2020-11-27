@@ -1,22 +1,18 @@
 #include <camera.h>
+#include <engine.h>
 #include <image.h>
 #include <ray.h>
 #include <sphere.h>
 #include <vec.h>
 
+#include <memory>
+
 int main(int argc, char** argv) {
-  render::Camera camera(1001, 1001);
-  render::Sphere sphere(3.F, render::Vec(0, 0, 10));
   std::cout << "rendering ... " << std::endl;
-  for (auto h = 0; h < camera.height(); h++) {
-    for (auto w = 0; w < camera.width(); w++) {
-      const auto ray = camera.ray(w, h);
-      const auto reflection = sphere.interact(ray);
-      if (reflection.has_value()) {
-        camera.image(w, h) = reflection.value().color;
-      }
-    }
-  }
-  camera.save("sphere.png");
+  render::RenderEngine renderEngine;
+  renderEngine.add(std::make_unique<render::Sphere>(3.F, render::Vec(0, 0, 10)));
+  renderEngine.addCamera(std::move(render::Camera(1000, 1000)));
+  std::vector<render::Image> images = renderEngine.render();
+  images.front().save("sphere.png");
   std::cout << "rendering is done! " << std::endl;
 }
