@@ -10,5 +10,5 @@ TEST(RenderEngine, render) {
   std::vector<render::Image> images = renderEngine.render();
   ASSERT_EQ(images.size(), 1);
   ASSERT_EQ(images.front()(0, 0), render::RGB(0, 0, 0));
-  ASSERT_NE(images.front()(500, 500), render::RGB(0, 0, 0));
+  ASSERT_EQ(images.front()(700, 700), render::RGB(0, 0, 0));
 }
