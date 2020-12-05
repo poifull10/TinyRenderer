@@ -35,7 +35,7 @@ class RenderEngine {
               if (!interactionResult.has_value()) {
                 continue;
               }
-              const auto [interactedRay, interactedRGB, interactedDecay] = *interactionResult;
+              const auto [_, interactedRay, interactedRGB, interactedDecay] = *interactionResult;
               const auto currentDistance = (interactedRay.origin() - ray.value().origin()).norm();
               if (currentDistance < previousDistance) {
                 previousDistance = currentDistance;

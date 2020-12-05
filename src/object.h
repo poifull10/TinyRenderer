@@ -1,11 +1,17 @@
 #pragma once
 #include <optional>
+#include <tuple>
 
 #include "image.h"
 #include "ray.h"
 
 namespace render {
 struct RayInteractionResult {
+  enum class InteractionType {
+    LIGHT = 0,
+    OBJECT
+  };
+  InteractionType interactionType;
   Ray interactedRay;
   RGB color;
   float decay;
