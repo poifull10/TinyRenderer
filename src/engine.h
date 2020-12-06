@@ -30,17 +30,19 @@ class RenderEngine {
             float previousDistance = std::numeric_limits<float>::max();
             RGB tmpRGB;
             std::optional<Ray> tmpRay;
+            RayInteractionResult::InteractionType tmpInteractionType;
             for (const auto& object : objects_) {
               const auto interactionResult = object->interact(ray.value());
               if (!interactionResult.has_value()) {
                 continue;
               }
-              const auto [_, interactedRay, interactedRGB, interactedDecay] = *interactionResult;
+              const auto [interactionType, interactedRay, interactedRGB, interactedDecay] = *interactionResult;
               const auto currentDistance = (interactedRay.origin() - ray.value().origin()).norm();
               if (currentDistance < previousDistance) {
                 previousDistance = currentDistance;
                 tmpRGB = interactedDecay * interactedRGB;
                 tmpRay = interactedRay;
+                tmpInteractionType = interactionType;
               }
             }
             rgb += tmpRGB;
@@ -48,6 +50,9 @@ class RenderEngine {
               break;
             }
             ray = std::move(tmpRay.value());
+            if (tmpInteractionType.has_value() && tmpInteractionType.value() == RayInteractionResult::InteractionType::LIGHT) {
+              break;
+            }
             continue;
           }
           camera.image(w, h) = rgb;

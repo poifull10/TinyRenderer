@@ -12,7 +12,7 @@ class ParallelLight : public RenderObject {
   std::optional<RayInteractionResult> interact(const Ray& ray) const override {
     return RayInteractionResult{
         RayInteractionResult::InteractionType::LIGHT,
-        Ray(Vec(), direction_),
+        Ray(Vec(std::numeric_limits<float>::max(), std::numeric_limits<float>::max(), std::numeric_limits<float>::max()), direction_),
         source_,
         1.F};
   }
