@@ -28,13 +28,11 @@ class Sphere : public RenderObject {
       return std::nullopt;
     }
     const auto reflectedPoint = ray.at(k);
-    auto n = reflectedPoint - origin_;
-    n = n / n.norm();
-    const auto reflectedDirection = d + n * (2 * -d.dot(n));
-    const auto normalizedReflectedDirection = reflectedDirection / reflectedDirection.norm();
-    const auto decay = std::clamp(n.dot(Vec(1, 1, 0) / std::sqrt(2) * -1.F), 0.F, 1.F);
+    const auto n = (reflectedPoint - origin_).normalize();
+    const auto reflectedDirection = (d + n * (2 * -d.dot(n))).normalize();
+    const auto decay = std::clamp(n.dot(reflectedDirection), 0.F, 1.F);
     return RayInteractionResult{
-        Ray(reflectedPoint, normalizedReflectedDirection),
+        Ray(reflectedPoint, reflectedDirection),
         Albedo(decay, decay, decay)};
   }
 
