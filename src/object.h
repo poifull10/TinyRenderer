@@ -1,20 +1,17 @@
 #pragma once
 #include <optional>
 #include <tuple>
+#include <variant>
 
 #include "image.h"
+#include "material.h"
 #include "ray.h"
 
 namespace render {
+
 struct RayInteractionResult {
-  enum class InteractionType {
-    LIGHT = 0,
-    OBJECT
-  };
-  InteractionType interactionType;
   Ray interactedRay;
-  RGB color;
-  float decay;
+  std::variant<Albedo, RGB> color;  // Object or LightSource
 };
 
 class RenderObject {

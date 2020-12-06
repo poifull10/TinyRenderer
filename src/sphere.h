@@ -32,15 +32,10 @@ class Sphere : public RenderObject {
     n = n / n.norm();
     const auto reflectedDirection = d + n * (2 * -d.dot(n));
     const auto normalizedReflectedDirection = reflectedDirection / reflectedDirection.norm();
-
-    const auto decay = n.dot(Vec(1, 1, 0) / std::sqrt(2) * -1.F);
+    const auto decay = std::clamp(n.dot(Vec(1, 1, 0) / std::sqrt(2) * -1.F), 0.F, 1.F);
     return RayInteractionResult{
-        RayInteractionResult::InteractionType::OBJECT,
         Ray(reflectedPoint, normalizedReflectedDirection),
-        RGB(std::clamp<int>(255 * decay, 0, 255),
-            std::clamp<int>(255 * decay, 0, 255),
-            std::clamp<int>(255 * decay, 0, 255)),
-        1.F};
+        Albedo(decay, decay, decay)};
   }
 
  private:

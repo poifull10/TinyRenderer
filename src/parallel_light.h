@@ -7,18 +7,19 @@
 namespace render {
 class ParallelLight : public RenderObject {
  public:
-  ParallelLight(const RGB& rgb, const Vec& direction) : source_(rgb), direction_(direction) {}
+  ParallelLight(const RGB& rgb, const Ray& ray) : source_(rgb), ray_(ray) {}
   virtual ~ParallelLight() = default;
   std::optional<RayInteractionResult> interact(const Ray& ray) const override {
-    return RayInteractionResult{
-        RayInteractionResult::InteractionType::LIGHT,
-        Ray(Vec(std::numeric_limits<float>::max(), std::numeric_limits<float>::max(), std::numeric_limits<float>::max()), direction_),
-        source_,
-        1.F};
+    if (ray.direction().dot(ray_.direction()) < 0.F) {
+      return RayInteractionResult{
+          ray_,
+          source_};
+    }
+    return std::nullopt;
   }
 
  private:
   RGB source_;
-  Vec direction_;
+  Ray ray_;
 };
 }  // namespace render

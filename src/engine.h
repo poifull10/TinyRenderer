@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <memory>
 
 #include "camera.h"
@@ -26,36 +27,36 @@ class RenderEngine {
         for (auto w = 0; w < camera.width(); w++) {
           std::optional<Ray> ray = camera.ray(w, h);
           RGB rgb;
+          Albedo albedo;
           while (ray.has_value()) {
             float previousDistance = std::numeric_limits<float>::max();
-            RGB tmpRGB;
             std::optional<Ray> tmpRay;
-            RayInteractionResult::InteractionType tmpInteractionType;
             for (const auto& object : objects_) {
               const auto interactionResult = object->interact(ray.value());
               if (!interactionResult.has_value()) {
                 continue;
               }
-              const auto [interactionType, interactedRay, interactedRGB, interactedDecay] = *interactionResult;
+              const auto [interactedRay, reflection] = *interactionResult;
               const auto currentDistance = (interactedRay.origin() - ray.value().origin()).norm();
               if (currentDistance < previousDistance) {
                 previousDistance = currentDistance;
-                tmpRGB = interactedDecay * interactedRGB;
                 tmpRay = interactedRay;
-                tmpInteractionType = interactionType;
+                if (std::holds_alternative<Albedo>(reflection)) {
+                  albedo = albedo * std::get<Albedo>(reflection);
+                } else if (std::holds_alternative<RGB>(reflection)) {
+                  rgb = std::get<RGB>(reflection);
+                  tmpRay = std::nullopt;
+                } else {
+                  throw std::logic_error("Uncatched variant type");
+                }
               }
             }
-            rgb += tmpRGB;
             if (!tmpRay.has_value()) {
               break;
             }
             ray = std::move(tmpRay.value());
-            if (tmpInteractionType.has_value() && tmpInteractionType.value() == RayInteractionResult::InteractionType::LIGHT) {
-              break;
-            }
-            continue;
           }
-          camera.image(w, h) = rgb;
+          camera.image(w, h) = rgb * albedo;
         }
       }
       images.emplace_back(camera.image());
