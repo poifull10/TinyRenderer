@@ -1,7 +1,7 @@
 #include <engine.h>
 #include <gtest/gtest.h>
 #include <image.h>
-#include <parallel_light.h>
+#include <light.h>
 #include <sphere.h>
 
 TEST(RenderEngine, renderObject) {

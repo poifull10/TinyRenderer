@@ -7,16 +7,18 @@ TEST(Vec, construct) {
 }
 
 TEST(Vec, operator) {
-  render::Vec vec1(3, 1, 4);
-  ASSERT_FLOAT_EQ(vec1.x(), 3.F);
-  ASSERT_FLOAT_EQ(vec1.y(), 1.F);
-  ASSERT_FLOAT_EQ(vec1.z(), 4.F);
-  ASSERT_FLOAT_EQ(vec1.norm(), 5.0990195135F);
+  {
+    render::Vec vec1(3, 1, 4);
+    ASSERT_FLOAT_EQ(vec1.x(), 3.F);
+    ASSERT_FLOAT_EQ(vec1.y(), 1.F);
+    ASSERT_FLOAT_EQ(vec1.z(), 4.F);
+    ASSERT_FLOAT_EQ(vec1.norm(), 5.0990195135F);
 
-  vec1.x() = 10.F;
-  ASSERT_FLOAT_EQ(vec1.x(), 10.F);
-  ASSERT_FLOAT_EQ(vec1.y(), 1.F);
-  ASSERT_FLOAT_EQ(vec1.z(), 4.F);
+    vec1.x() = 10.F;
+    ASSERT_FLOAT_EQ(vec1.x(), 10.F);
+    ASSERT_FLOAT_EQ(vec1.y(), 1.F);
+    ASSERT_FLOAT_EQ(vec1.z(), 4.F);
+  }
 
   render::Vec vec2;
   ASSERT_FLOAT_EQ(vec2.x(), 0.F);
