@@ -16,6 +16,7 @@ class Camera {
   void load(const std::string& path) { image_ = Image::load(path); }
 
   RGB& image(std::size_t w, std::size_t h) { return image_(w, h); }
+  Image image() const { return image_; }
 
   Ray ray(std::size_t w, std::size_t h) const {
     constexpr auto pixelSize = 1e-3F;

@@ -9,8 +9,15 @@ class Ray {
     }
   }
 
-  Vec origin() const { return origin_; }
-  Vec direction() const { return direction_; }
+  Vec origin() const {
+    return origin_;
+  }
+  Vec direction() const {
+    return direction_;
+  }
+  Vec at(float k) const {
+    return origin_ + direction_ * k;
+  }
 
  private:
   Vec origin_;

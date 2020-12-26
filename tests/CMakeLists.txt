@@ -6,6 +6,7 @@ add_executable(
   vec_test.cpp
   ray_test.cpp
   sphere_test.cpp
+  engine_test.cpp
 )
 
 target_include_directories(TRendererTest
