@@ -22,4 +22,19 @@ class ParallelLight : public RenderObject {
   RGB source_;
   Ray ray_;
 };
+
+class PointLight : public RenderObject {
+ public:
+  PointLight(const RGB& rgb, const Ray& ray) : source_(rgb), ray_(ray) {}
+  virtual ~PointLight() = default;
+  std::optional<RayInteractionResult> interact(const Ray& ray) const override {
+    return RayInteractionResult{
+        ray_,
+        source_};
+  }
+
+ private:
+  RGB source_;
+  Ray ray_;
+};
 }  // namespace render

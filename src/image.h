@@ -4,7 +4,7 @@
 #include <vector>
 
 namespace render {
-#define CRAMP_RGB(x) std::clamp(x, 0, 255)
+#define CRAMP_RGB(x) static_cast<std::uint8_t>(std::clamp(static_cast<int>(x), 0, 255))
 
 struct RGB {
   std::uint8_t r;
