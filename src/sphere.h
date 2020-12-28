@@ -14,6 +14,9 @@ class Sphere : public RenderObject {
 
   std::optional<RayInteractionResult> interact(const Ray& ray) const override {
     const auto o = ray.origin();
+    if ((o - origin_).norm() < r_) {
+      return std::nullopt;
+    }
     const auto d = ray.direction();
     const auto s = origin_;
     const auto a = 1.F;

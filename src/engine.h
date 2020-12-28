@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 #include <memory>
 
 #include "camera.h"
@@ -11,6 +10,7 @@ namespace render {
 class RenderEngine {
  public:
   RenderEngine() = default;
+  ~RenderEngine() = default;
 
   void addCamera(Camera&& camera) {
     cameras_.emplace_back(camera);
@@ -25,19 +25,19 @@ class RenderEngine {
     for (auto& camera : cameras_) {
       for (auto h = 0; h < camera.height(); h++) {
         for (auto w = 0; w < camera.width(); w++) {
-          std::optional<Ray> ray = camera.ray(w, h);
+          auto ray = camera.ray(w, h);
           RGB rgb;
           Albedo albedo;
-          while (ray.has_value()) {
+          while (true) {
             float previousDistance = std::numeric_limits<float>::max();
             std::optional<Ray> tmpRay;
             for (const auto& object : objects_) {
-              const auto interactionResult = object->interact(ray.value());
+              const auto interactionResult = object->interact(ray);
               if (!interactionResult.has_value()) {
                 continue;
               }
-              const auto [interactedRay, reflection] = *interactionResult;
-              const auto currentDistance = (interactedRay.origin() - ray.value().origin()).norm();
+              const auto [interactedRay, reflection] = interactionResult.value();
+              const auto currentDistance = (interactedRay.origin() - ray.origin()).norm();
               if (currentDistance < previousDistance) {
                 previousDistance = currentDistance;
                 tmpRay = interactedRay;
@@ -46,8 +46,6 @@ class RenderEngine {
                 } else if (std::holds_alternative<RGB>(reflection)) {
                   rgb = std::get<RGB>(reflection);
                   tmpRay = std::nullopt;
-                } else {
-                  throw std::logic_error("Uncatched variant type");
                 }
               }
             }
